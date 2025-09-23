@@ -55,33 +55,12 @@ const Contact: React.FC = () => {
       }
     }
 
-    // Validate event date
-    if ((name === 'eventMonth' || name === 'eventDay' || name === 'eventYear') && value !== '') {
-      // Only validate if all three parts are filled
-      const month = name === 'eventMonth' ? value : formData.eventMonth;
-      const day = name === 'eventDay' ? value : formData.eventDay;
-      const year = name === 'eventYear' ? value : formData.eventYear;
-
-      if (month && day && year) {
-        const selectedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
-        const today = new Date();
-        today.setHours(0, 0, 0, 0);
-
-        if (selectedDate < today) {
-          setErrors({
-            ...errors,
-            eventDate: 'Event date cannot be in the past'
-          });
-        } else {
-          // Clear error if date is valid
-          if (errors.eventDate) {
-            setErrors({
-              ...errors,
-              eventDate: ''
-            });
-          }
-        }
-      }
+    // Clear any date validation errors when user changes date fields
+    if ((name === 'eventMonth' || name === 'eventDay' || name === 'eventYear') && errors.eventDate) {
+      setErrors({
+        ...errors,
+        eventDate: ''
+      });
     }
 
     setFormData({
@@ -93,6 +72,22 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+
+    // Validate event date on form submission
+    if (formData.eventMonth && formData.eventDay && formData.eventYear) {
+      const selectedDate = new Date(parseInt(formData.eventYear), parseInt(formData.eventMonth) - 1, parseInt(formData.eventDay));
+      const today = new Date();
+      today.setHours(0, 0, 0, 0);
+
+      if (selectedDate < today) {
+        setErrors({
+          ...errors,
+          eventDate: 'Event date cannot be in the past'
+        });
+        setIsSubmitting(false);
+        return;
+      }
+    }
 
     try {
       // Combine date parts for submission
