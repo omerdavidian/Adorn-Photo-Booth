@@ -75,22 +75,36 @@ const Contact: React.FC = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate form submission
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitted(true);
-      setFormData({
-        name: '',
-        email: '',
-        phone: '',
-        eventDate: '',
-        eventType: '',
-        guests: '',
-        package: '',
-        message: ''
+
+    try {
+      const response = await fetch('https://formspree.io/f/xanpyjrn', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
       });
-    }, 2000);
+
+      if (response.ok) {
+        setIsSubmitting(false);
+        setSubmitted(true);
+        setFormData({
+          name: '',
+          email: '',
+          phone: '',
+          eventDate: '',
+          eventType: '',
+          guests: '',
+          package: '',
+          message: ''
+        });
+      } else {
+        throw new Error('Failed to submit form');
+      }
+    } catch (error) {
+      setIsSubmitting(false);
+      alert('There was an error submitting the form. Please try again or contact us directly.');
+    }
   };
 
   if (submitted) {
@@ -99,7 +113,7 @@ const Contact: React.FC = () => {
         <div className="contact-container">
           <div className="success-message">
             <h2>🎉 Thank You!</h2>
-            <p>Your message has been sent successfully. We'll get back to you within 24 hours to discuss your event details.</p>
+            <p>Your message has been sent successfully. We'll get back to you soon to discuss your event details.</p>
             <button onClick={() => setSubmitted(false)} className="success-button">
               Send Another Message
             </button>
