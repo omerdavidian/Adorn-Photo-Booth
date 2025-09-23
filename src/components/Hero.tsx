@@ -47,10 +47,6 @@ const Hero: React.FC = () => {
     setCurrentSlide((prev) => (prev + 1) % slides.length);
   };
 
-  const prevSlide = () => {
-    setCurrentSlide((prev) => prev === 0 ? slides.length - 1 : prev - 1);
-  };
-
   const goToSlide = (index: number) => {
     setCurrentSlide(index);
   };
@@ -59,8 +55,6 @@ const Hero: React.FC = () => {
     const interval = setInterval(nextSlide, 7000);
     return () => clearInterval(interval);
   }, []);
-
-  const currentSlideData = slides[currentSlide];
 
   return (
     <section id="hero" className="hero-slider-container">
