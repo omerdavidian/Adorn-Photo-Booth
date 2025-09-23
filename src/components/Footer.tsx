@@ -55,8 +55,8 @@ const Footer: React.FC = () => {
             <p>&copy; {currentYear} Adorn Photo Booth. All rights reserved.</p>
           </div>
           <div className="footer-social">
-            <a class='bi bi-facebook' href="https://www.facebook.com/AdornPhotoBooth/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"></a>
-            <a class='bi bi-instagram' href="https://www.instagram.com/adornphotobooth" aria-label="Instagram" target="_blank" rel="noopener noreferrer"></a>
+            <a className='bi bi-facebook' href="https://www.facebook.com/AdornPhotoBooth/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"></a>
+            <a className='bi bi-instagram' href="https://www.instagram.com/adornphotobooth" aria-label="Instagram" target="_blank" rel="noopener noreferrer"></a>
           </div>
         </div>
       </div>
