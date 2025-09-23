@@ -1,0 +1,109 @@
+* {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+  width: 100%;
+}
+
+.App {
+  min-height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  width: 100%;
+}
+
+.section-title {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #8B4513;
+  text-align: center;
+  margin-bottom: 3rem;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 4px;
+  background: linear-gradient(135deg, #FF4500, #FFD700);
+  border-radius: 2px;
+}
+
+/* Utility classes */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  width: 100%;
+}
+
+/* Responsive breakpoints */
+/* Mobile phones: 320px - 480px */
+@media (max-width: 480px) {
+  .container {
+    padding: 0 1rem;
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+}
+
+/* Tablets: 481px - 768px */
+@media (min-width: 481px) and (max-width: 768px) {
+  .container {
+    padding: 0 1.5rem;
+  }
+
+  .section-title {
+    font-size: 2.4rem;
+  }
+}
+
+/* Small laptops: 769px - 1024px */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Desktops: 1025px and up */
+@media (min-width: 1025px) {
+  .container {
+    padding: 0 2rem;
+  }
+}
+
+/* Large screens: 1440px and up */
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1400px;
+  }
+}
+
+/* Smooth scroll offset for fixed header */
+html {
+  scroll-padding-top: 100px;
+}
