@@ -5,7 +5,7 @@ const Pricing: React.FC = () => {
   const plans = [
     {
       name: 'Basic Package',
-      price: '$299',
+      price: '$800',
       duration: '2 hours',
       features: [
         'Professional photo booth setup',
@@ -18,7 +18,7 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Premium Package',
-      price: '$499',
+      price: '$1100',
       duration: '4 hours',
       features: [
         'Everything in Basic Package',
@@ -32,15 +32,15 @@ const Pricing: React.FC = () => {
     },
     {
       name: 'Deluxe Package',
-      price: '$799',
-      duration: 'All day',
+      price: '$1400',
+      duration: '6 hours',
       features: [
         'Everything in Premium Package',
         'Unlimited photos',
         'Custom branded prints',
-        'Guest book creation',
-        'Video messages option',
-        'Premium backdrop selection'
+        'Magnetic Photo Prints',
+        'Premium backdrop selection',
+        'Green screen technology option'
       ],
       popular: false
     }
@@ -71,7 +71,20 @@ const Pricing: React.FC = () => {
                 ))}
               </ul>
               
-              <button className="plan-button">
+              <button
+                className="plan-button"
+                onClick={() => {
+                  const element = document.getElementById('contact');
+                  if (element) {
+                    const headerHeight = 80;
+                    const elementPosition = element.offsetTop - headerHeight;
+                    window.scrollTo({
+                      top: elementPosition,
+                      behavior: 'smooth'
+                    });
+                  }
+                }}
+              >
                 Book This Package
               </button>
             </div>

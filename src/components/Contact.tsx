@@ -8,6 +8,7 @@ interface FormData {
   eventDate: string;
   eventType: string;
   guests: string;
+  package: string;
   message: string;
 }
 
@@ -19,16 +20,55 @@ const Contact: React.FC = () => {
     eventDate: '',
     eventType: '',
     guests: '',
+    package: '',
     message: ''
   });
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [errors, setErrors] = useState<{[key: string]: string}>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+
+    // Clear any existing error for this field
+    if (errors[name]) {
+      setErrors({
+        ...errors,
+        [name]: ''
+      });
+    }
+
+    // Validate guests field
+    if (name === 'guests' && value !== '') {
+      const guestCount = parseInt(value);
+      if (guestCount < 0) {
+        setErrors({
+          ...errors,
+          guests: 'Number of guests cannot be negative'
+        });
+        return;
+      }
+    }
+
+    // Validate event date
+    if (name === 'eventDate' && value !== '') {
+      const selectedDate = new Date(value);
+      const today = new Date();
+      today.setHours(0, 0, 0, 0); // Reset time to start of day for comparison
+
+      if (selectedDate < today) {
+        setErrors({
+          ...errors,
+          eventDate: 'Event date cannot be in the past'
+        });
+        return;
+      }
+    }
+
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [name]: value
     });
   };
 
@@ -47,6 +87,7 @@ const Contact: React.FC = () => {
         eventDate: '',
         eventType: '',
         guests: '',
+        package: '',
         message: ''
       });
     }, 2000);
@@ -84,31 +125,23 @@ const Contact: React.FC = () => {
               <span className="contact-icon">📞</span>
               <div>
                 <h4>Phone</h4>
-                <p>(555) 123-PHOTO</p>
+                <p>417-448-4362</p>
               </div>
             </div>
-            
+
             <div className="contact-item">
               <span className="contact-icon">✉️</span>
               <div>
                 <h4>Email</h4>
-                <p>hello@adornphotobooth.com</p>
+                <p>info@adornphotobooth.com</p>
               </div>
             </div>
-            
+
             <div className="contact-item">
               <span className="contact-icon">📍</span>
               <div>
                 <h4>Service Area</h4>
-                <p>Greater Metropolitan Area</p>
-              </div>
-            </div>
-            
-            <div className="contact-item">
-              <span className="contact-icon">🕰️</span>
-              <div>
-                <h4>Response Time</h4>
-                <p>Within 24 hours</p>
+                <p>Denver area, Summit County Area</p>
               </div>
             </div>
           </div>
@@ -140,13 +173,14 @@ const Contact: React.FC = () => {
               </div>
               
               <div className="form-group">
-                <label htmlFor="phone">Phone</label>
+                <label htmlFor="phone">Phone *</label>
                 <input
                   type="tel"
                   id="phone"
                   name="phone"
                   value={formData.phone}
                   onChange={handleChange}
+                  required
                 />
               </div>
             </div>
@@ -160,7 +194,11 @@ const Contact: React.FC = () => {
                   name="eventDate"
                   value={formData.eventDate}
                   onChange={handleChange}
+                  className={errors.eventDate ? 'error' : ''}
                 />
+                {errors.eventDate && (
+                  <div className="error-message">{errors.eventDate}</div>
+                )}
               </div>
               
               <div className="form-group">
@@ -182,16 +220,38 @@ const Contact: React.FC = () => {
               </div>
             </div>
             
-            <div className="form-group">
-              <label htmlFor="guests">Expected Number of Guests</label>
-              <input
-                type="number"
-                id="guests"
-                name="guests"
-                value={formData.guests}
-                onChange={handleChange}
-                placeholder="e.g., 50"
-              />
+            <div className="form-row">
+              <div className="form-group">
+                <label htmlFor="guests">Expected Number of Guests</label>
+                <input
+                  type="number"
+                  id="guests"
+                  name="guests"
+                  value={formData.guests}
+                  onChange={handleChange}
+                  placeholder="e.g., 50"
+                  min="0"
+                  className={errors.guests ? 'error' : ''}
+                />
+                {errors.guests && (
+                  <div className="error-message">{errors.guests}</div>
+                )}
+              </div>
+
+              <div className="form-group">
+                <label htmlFor="package">Preferred Package</label>
+                <select
+                  id="package"
+                  name="package"
+                  value={formData.package}
+                  onChange={handleChange}
+                >
+                  <option value="">Select a package</option>
+                  <option value="basic">Basic Package - $800</option>
+                  <option value="premium">Premium Package - $1100</option>
+                  <option value="deluxe">Deluxe Package - $1400</option>
+                </select>
+              </div>
             </div>
             
             <div className="form-group">

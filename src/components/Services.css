@@ -1,5 +1,5 @@
 .services {
-  padding: 6rem 0;
+  padding: 3rem 0;
   background: #FFFAF0;
   width: 100%;
 }
@@ -87,7 +87,7 @@
 /* Mobile phones: 320px - 480px */
 @media (max-width: 480px) {
   .services {
-    padding: 4rem 0;
+    padding: 2rem 0;
   }
 
   .services-container {
@@ -102,7 +102,7 @@
 /* Tablets: 481px - 768px */
 @media (min-width: 481px) and (max-width: 768px) {
   .services {
-    padding: 5rem 0;
+    padding: 2.5rem 0;
   }
 
   .services-container {

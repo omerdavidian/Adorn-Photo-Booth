@@ -1,5 +1,5 @@
 .contact {
-  padding: 6rem 0;
+  padding: 3rem 0;
   background: linear-gradient(135deg, #FFF8DC 0%, #FFFAF0 100%);
   width: 100%;
 }
@@ -100,6 +100,8 @@
   font-size: 1rem;
   transition: all 0.3s ease;
   font-family: inherit;
+  background: white;
+  color: black;
 }
 
 .form-group input:focus,
@@ -113,6 +115,20 @@
 .form-group textarea {
   resize: vertical;
   min-height: 100px;
+}
+
+.form-group input.error,
+.form-group select.error,
+.form-group textarea.error {
+  border-color: #dc3545;
+  box-shadow: 0 0 0 3px rgba(220, 53, 69, 0.1);
+}
+
+.error-message {
+  color: #dc3545;
+  font-size: 0.875rem;
+  margin-top: 0.5rem;
+  font-weight: 500;
 }
 
 .submit-button {
@@ -184,7 +200,7 @@
 /* Mobile phones: 320px - 480px */
 @media (max-width: 480px) {
   .contact {
-    padding: 4rem 0;
+    padding: 2rem 0;
   }
 
   .contact-container {
@@ -220,7 +236,7 @@
 /* Tablets: 481px - 768px */
 @media (min-width: 481px) and (max-width: 768px) {
   .contact {
-    padding: 5rem 0;
+    padding: 2.5rem 0;
   }
 
   .contact-container {

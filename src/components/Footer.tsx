@@ -43,9 +43,9 @@ const Footer: React.FC = () => {
           <div className="footer-section">
             <h4>Contact Info</h4>
             <div className="footer-contact">
-              <p>📞 (555) 123-PHOTO</p>
-              <p>✉️ hello@adornphotobooth.com</p>
-              <p>📍 Greater Metropolitan Area</p>
+              <p>📞 417-448-4362</p>
+              <p>✉️ info@adornphotobooth.com</p>
+              <p>📍 Denver area, Summit County Area</p>
             </div>
           </div>
         </div>
@@ -55,9 +55,8 @@ const Footer: React.FC = () => {
             <p>&copy; {currentYear} Adorn Photo Booth. All rights reserved.</p>
           </div>
           <div className="footer-social">
-            <a href="#" aria-label="Facebook">🗨</a>
-            <a href="#" aria-label="Instagram">📷</a>
-            <a href="#" aria-label="Twitter">📢</a>
+            <a class='bi bi-facebook' href="https://www.facebook.com/AdornPhotoBooth/" aria-label="Facebook" target="_blank" rel="noopener noreferrer"></a>
+            <a class='bi bi-instagram' href="https://www.instagram.com/adornphotobooth" aria-label="Instagram" target="_blank" rel="noopener noreferrer"></a>
           </div>
         </div>
       </div>
