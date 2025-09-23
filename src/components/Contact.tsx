@@ -5,7 +5,9 @@ interface FormData {
   name: string;
   email: string;
   phone: string;
-  eventDate: string;
+  eventMonth: string;
+  eventDay: string;
+  eventYear: string;
   eventType: string;
   guests: string;
   package: string;
@@ -17,7 +19,9 @@ const Contact: React.FC = () => {
     name: '',
     email: '',
     phone: '',
-    eventDate: '',
+    eventMonth: '',
+    eventDay: '',
+    eventYear: '',
     eventType: '',
     guests: '',
     package: '',
@@ -52,17 +56,31 @@ const Contact: React.FC = () => {
     }
 
     // Validate event date
-    if (name === 'eventDate' && value !== '') {
-      const selectedDate = new Date(value);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0); // Reset time to start of day for comparison
+    if ((name === 'eventMonth' || name === 'eventDay' || name === 'eventYear') && value !== '') {
+      // Only validate if all three parts are filled
+      const month = name === 'eventMonth' ? value : formData.eventMonth;
+      const day = name === 'eventDay' ? value : formData.eventDay;
+      const year = name === 'eventYear' ? value : formData.eventYear;
 
-      if (selectedDate < today) {
-        setErrors({
-          ...errors,
-          eventDate: 'Event date cannot be in the past'
-        });
-        return;
+      if (month && day && year) {
+        const selectedDate = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+
+        if (selectedDate < today) {
+          setErrors({
+            ...errors,
+            eventDate: 'Event date cannot be in the past'
+          });
+        } else {
+          // Clear error if date is valid
+          if (errors.eventDate) {
+            setErrors({
+              ...errors,
+              eventDate: ''
+            });
+          }
+        }
       }
     }
 
@@ -77,12 +95,20 @@ const Contact: React.FC = () => {
     setIsSubmitting(true);
 
     try {
+      // Combine date parts for submission
+      const submissionData = {
+        ...formData,
+        eventDate: formData.eventMonth && formData.eventDay && formData.eventYear
+          ? `${formData.eventMonth}/${formData.eventDay}/${formData.eventYear}`
+          : ''
+      };
+
       const response = await fetch('https://formspree.io/f/xanpyjrn', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(submissionData),
       });
 
       if (response.ok) {
@@ -92,7 +118,9 @@ const Contact: React.FC = () => {
           name: '',
           email: '',
           phone: '',
-          eventDate: '',
+          eventMonth: '',
+          eventDay: '',
+          eventYear: '',
           eventType: '',
           guests: '',
           package: '',
@@ -201,15 +229,54 @@ const Contact: React.FC = () => {
             
             <div className="form-row">
               <div className="form-group">
-                <label htmlFor="eventDate">Event Date</label>
-                <input
-                  type="date"
-                  id="eventDate"
-                  name="eventDate"
-                  value={formData.eventDate}
-                  onChange={handleChange}
-                  className={errors.eventDate ? 'error' : ''}
-                />
+                <label htmlFor="eventMonth">Event Date</label>
+                <div className="date-inputs">
+                  <select
+                    id="eventMonth"
+                    name="eventMonth"
+                    value={formData.eventMonth}
+                    onChange={handleChange}
+                    className={errors.eventDate ? 'error' : ''}
+                  >
+                    <option value="">Month</option>
+                    <option value="1">January</option>
+                    <option value="2">February</option>
+                    <option value="3">March</option>
+                    <option value="4">April</option>
+                    <option value="5">May</option>
+                    <option value="6">June</option>
+                    <option value="7">July</option>
+                    <option value="8">August</option>
+                    <option value="9">September</option>
+                    <option value="10">October</option>
+                    <option value="11">November</option>
+                    <option value="12">December</option>
+                  </select>
+                  <select
+                    id="eventDay"
+                    name="eventDay"
+                    value={formData.eventDay}
+                    onChange={handleChange}
+                    className={errors.eventDate ? 'error' : ''}
+                  >
+                    <option value="">Day</option>
+                    {Array.from({ length: 31 }, (_, i) => i + 1).map(day => (
+                      <option key={day} value={day}>{day}</option>
+                    ))}
+                  </select>
+                  <select
+                    id="eventYear"
+                    name="eventYear"
+                    value={formData.eventYear}
+                    onChange={handleChange}
+                    className={errors.eventDate ? 'error' : ''}
+                  >
+                    <option value="">Year</option>
+                    {Array.from({ length: 10 }, (_, i) => new Date().getFullYear() + i).map(year => (
+                      <option key={year} value={year}>{year}</option>
+                    ))}
+                  </select>
+                </div>
                 {errors.eventDate && (
                   <div className="error-message">{errors.eventDate}</div>
                 )}
