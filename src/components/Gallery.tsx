@@ -7,18 +7,18 @@ const Gallery: React.FC = () => {
 
   // Real photo booth images from events
   const galleryImages = [
-    '/photos/AdobeStock_100647292.jpeg',
-    '/photos/20190320_200453_085__MG_6214.JPG',
-    '/photos/_MG_0005.jpg',
-    '/photos/AdobeStock_75068225.jpeg',
-    '/photos/20170415_153038_646.jpg',
-    '/photos/_MG_0007.jpg',
-    '/photos/AdobeStock_115289842.jpeg',
-    '/photos/20190320_214612_568__MG_6233.JPG',
-    '/photos/20170416_140104_801.jpg',
-    '/photos/AdobeStock_73296077.jpeg',
-    '/photos/20200205_193543_712.jpg',
-    '/photos/_MG_9985.jpg'
+    '/photos/AdobeStock_100647292.webp',
+    '/photos/20190320_200453_085__MG_6214.webp',
+    '/photos/_MG_0005.webp',
+    '/photos/AdobeStock_75068225.webp',
+    '/photos/20170415_153038_646.webp',
+    '/photos/_MG_0007.webp',
+    '/photos/AdobeStock_115289842.webp',
+    '/photos/20190320_214612_568__MG_6233.webp',
+    '/photos/20170416_140104_801.webp',
+    '/photos/AdobeStock_73296077.webp',
+    '/photos/20200205_193543_712.webp',
+    '/photos/_MG_9985.webp'
   ];
 
   const openLightbox = (image: string, index: number) => {

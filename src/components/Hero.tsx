@@ -10,14 +10,14 @@ const Hero: React.FC = () => {
       title: "Create Unforgettable",
       highlight: "Memories",
       subtitle: "Fun, creative photo booth experiences for weddings, parties, corporate events, and special occasions.",
-      backgroundImage: "/photos/20161118_132311_366.jpg"
+      backgroundImage: "/photos/St1.webp"
     },
     {
       id: 2,
       title: "Capture Pure Joy &",
       highlight: "Laughter",
       subtitle: "Professional photo booth services that bring out genuine smiles and spontaneous moments at every celebration.",
-      backgroundImage: "/photos/20190320_200453_085__MG_6214.JPG",
+      backgroundImage: "/photos/20190320_200453_085__MG_6214.webp",
       backgroundPosition: "center 30%"
     },
     {
@@ -25,7 +25,7 @@ const Hero: React.FC = () => {
       title: "Make Your Event",
       highlight: "Extraordinary",
       subtitle: "Transform any gathering into an unforgettable experience with our premium photo booth services.",
-      backgroundImage: "/photos/AdobeStock_75068225.jpeg",
+      backgroundImage: "/photos/AdobeStock_75068225.webp",
       backgroundPosition: "center 35%"
     }
   ];

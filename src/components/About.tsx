@@ -5,8 +5,8 @@ const About: React.FC = () => {
   return (
     <section id="about" className="about">
       <div className="about-background-images">
-        <img src="/photos/20170415_153038_646.jpg" alt="Event Photo" className="bg-photo bg-1" />
-        <img src="/photos/AdobeStock_73296077.jpeg" alt="Party Photo" className="bg-photo bg-2" />
+        <img src="/photos/20170415_153038_646.webp" alt="Event Photo" className="bg-photo bg-1" />
+        <img src="/photos/AdobeStock_73296077.webp" alt="Party Photo" className="bg-photo bg-2" />
       </div>
       <div className="about-container">
         <div className="about-content">
