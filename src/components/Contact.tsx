@@ -106,7 +106,7 @@ const Contact: React.FC = () => {
         }
       });
 
-      const response = await fetch('https://formspree.io/f/xanpyjrn', {
+      const response = await fetch('https://formspree.io/f/myznybke', {
         method: 'POST',
         body: formDataToSend,
       });
