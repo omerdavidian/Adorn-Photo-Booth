@@ -98,12 +98,17 @@ const Contact: React.FC = () => {
           : ''
       };
 
+      // Convert to FormData for proper Formspree submission
+      const formDataToSend = new FormData();
+      Object.keys(submissionData).forEach(key => {
+        if (key !== 'eventMonth' && key !== 'eventDay' && key !== 'eventYear') {
+          formDataToSend.append(key, submissionData[key]);
+        }
+      });
+
       const response = await fetch('https://formspree.io/f/xanpyjrn', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(submissionData),
+        body: formDataToSend,
       });
 
       if (response.ok) {
