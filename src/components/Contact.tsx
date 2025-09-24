@@ -28,8 +28,6 @@ const Contact: React.FC = () => {
     message: ''
   });
 
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false);
   const [errors, setErrors] = useState<{[key: string]: string}>({});
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -69,10 +67,7 @@ const Contact: React.FC = () => {
     });
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-
+  const handleSubmit = (e: React.FormEvent) => {
     // Validate event date on form submission
     if (formData.eventMonth && formData.eventDay && formData.eventYear) {
       const selectedDate = new Date(parseInt(formData.eventYear), parseInt(formData.eventMonth) - 1, parseInt(formData.eventDay));
@@ -80,84 +75,19 @@ const Contact: React.FC = () => {
       today.setHours(0, 0, 0, 0);
 
       if (selectedDate < today) {
+        e.preventDefault();
         setErrors({
           ...errors,
           eventDate: 'Event date cannot be in the past'
         });
-        setIsSubmitting(false);
         return;
       }
     }
 
-    try {
-      // Combine date parts for submission
-      const submissionData = {
-        ...formData,
-        eventDate: formData.eventMonth && formData.eventDay && formData.eventYear
-          ? `${formData.eventMonth}/${formData.eventDay}/${formData.eventYear}`
-          : ''
-      };
-
-      // Convert to FormData for proper Formspree submission
-      const formDataToSend = new FormData();
-      Object.keys(submissionData).forEach(key => {
-        if (key !== 'eventMonth' && key !== 'eventDay' && key !== 'eventYear') {
-          formDataToSend.append(key, submissionData[key as keyof typeof submissionData]);
-        }
-      });
-
-      const response = await fetch('https://formspree.io/f/myznybke', {
-        method: 'POST',
-        body: formDataToSend,
-      });
-
-      // Log response details for debugging
-      console.log('Formspree response status:', response.status);
-      console.log('Formspree response ok:', response.ok);
-
-      // Formspree typically returns 200 or 302 for successful submissions
-      if (response.status === 200 || response.status === 302 || response.ok) {
-        setIsSubmitting(false);
-        setSubmitted(true);
-        setFormData({
-          name: '',
-          email: '',
-          phone: '',
-          eventMonth: '',
-          eventDay: '',
-          eventYear: '',
-          eventType: '',
-          guests: '',
-          package: '',
-          message: ''
-        });
-      } else {
-        // Log the actual response for debugging
-        const errorText = await response.text();
-        console.error('Form submission failed:', response.status, errorText);
-        throw new Error(`Failed to submit form: ${response.status}`);
-      }
-    } catch (error) {
-      setIsSubmitting(false);
-      alert('There was an error submitting the form. Please try again or contact us directly.');
-    }
+    // If validation passes, let the form submit naturally to Formspree
+    // Formspree will handle the submission and redirect to their success page
   };
 
-  if (submitted) {
-    return (
-      <section id="contact" className="contact">
-        <div className="contact-container">
-          <div className="success-message">
-            <h2>🎉 Thank You!</h2>
-            <p>Your message has been sent successfully. We'll get back to you soon to discuss your event details.</p>
-            <button onClick={() => setSubmitted(false)} className="success-button">
-              Send Another Message
-            </button>
-          </div>
-        </div>
-      </section>
-    );
-  }
 
   return (
     <section id="contact" className="contact">
@@ -196,7 +126,15 @@ const Contact: React.FC = () => {
             </div>
           </div>
           
-          <form className="contact-form" onSubmit={handleSubmit}>
+          <form className="contact-form" action="https://formspree.io/f/myznybke" method="POST" onSubmit={handleSubmit}>
+            <input
+              type="hidden"
+              name="eventDate"
+              value={formData.eventMonth && formData.eventDay && formData.eventYear
+                ? `${formData.eventMonth}/${formData.eventDay}/${formData.eventYear}`
+                : ''
+              }
+            />
             <div className="form-group">
               <label htmlFor="name">Full Name *</label>
               <input
@@ -355,12 +293,11 @@ const Contact: React.FC = () => {
               ></textarea>
             </div>
             
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="submit-button"
-              disabled={isSubmitting}
             >
-              {isSubmitting ? 'Sending...' : 'Send Message'}
+              Send Message
             </button>
           </form>
         </div>
