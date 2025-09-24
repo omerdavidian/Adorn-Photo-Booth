@@ -10,7 +10,7 @@ const Hero: React.FC = () => {
       title: "Create Unforgettable",
       highlight: "Memories",
       subtitle: "Fun, creative photo booth experiences for weddings, parties, corporate events, and special occasions.",
-      backgroundImage: "/photos/StockPhoto1"
+      backgroundImage: "/photos/20161118_132311_366.jpg"
     },
     {
       id: 2,
