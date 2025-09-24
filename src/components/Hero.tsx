@@ -52,7 +52,7 @@ const Hero: React.FC = () => {
   };
 
   useEffect(() => {
-    const interval = setInterval(nextSlide, 7000);
+    const interval = setInterval(nextSlide, 6000);
     return () => clearInterval(interval);
   }, []);
 
@@ -61,7 +61,7 @@ const Hero: React.FC = () => {
       {slides.map((slide, index) => (
         <div
           key={slide.id}
-          className={`hero-slide ${index === currentSlide ? 'active' : ''}`}
+          className={`hero-slide ${index === currentSlide ? 'active' : ''} ${index % 2 === 0 ? 'zoom-in' : 'zoom-out'}`}
           style={{
             backgroundImage: `url(${slide.backgroundImage})`,
             backgroundPosition: slide.backgroundPosition || 'center'
