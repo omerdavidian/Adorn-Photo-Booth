@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Contact.css';
 
 interface FormData {
@@ -29,6 +29,16 @@ const Contact: React.FC = () => {
   });
 
   const [errors, setErrors] = useState<{[key: string]: string}>({});
+  const [showSuccess, setShowSuccess] = useState(false);
+
+  useEffect(() => {
+    // Check if user was redirected back from Formspree with success hash
+    if (window.location.hash === '#contact-success') {
+      setShowSuccess(true);
+      // Clear the hash from URL after showing success message
+      window.history.replaceState(null, '', window.location.pathname);
+    }
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -89,6 +99,22 @@ const Contact: React.FC = () => {
   };
 
 
+  if (showSuccess) {
+    return (
+      <section id="contact" className="contact">
+        <div className="contact-container">
+          <div className="success-message">
+            <h2>🎉 Thank You!</h2>
+            <p>Your message has been sent successfully. We'll get back to you soon to discuss your event details.</p>
+            <button onClick={() => setShowSuccess(false)} className="success-button">
+              Send Another Message
+            </button>
+          </div>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="contact" className="contact">
       <div className="contact-container">
@@ -127,6 +153,7 @@ const Contact: React.FC = () => {
           </div>
           
           <form className="contact-form" action="https://formspree.io/f/myznybke" method="POST" onSubmit={handleSubmit}>
+            <input type="hidden" name="_next" value="https://adornphotobooth.com#contact-success" />
             <input
               type="hidden"
               name="eventDate"
