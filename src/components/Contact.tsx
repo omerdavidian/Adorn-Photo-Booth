@@ -111,8 +111,12 @@ const Contact: React.FC = () => {
         body: formDataToSend,
       });
 
-      // Check if response is successful (200-299 status codes)
-      if (response.status >= 200 && response.status < 300) {
+      // Log response details for debugging
+      console.log('Formspree response status:', response.status);
+      console.log('Formspree response ok:', response.ok);
+
+      // Formspree typically returns 200 or 302 for successful submissions
+      if (response.status === 200 || response.status === 302 || response.ok) {
         setIsSubmitting(false);
         setSubmitted(true);
         setFormData({
