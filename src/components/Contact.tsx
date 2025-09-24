@@ -102,7 +102,7 @@ const Contact: React.FC = () => {
       const formDataToSend = new FormData();
       Object.keys(submissionData).forEach(key => {
         if (key !== 'eventMonth' && key !== 'eventDay' && key !== 'eventYear') {
-          formDataToSend.append(key, submissionData[key]);
+          formDataToSend.append(key, submissionData[key as keyof typeof submissionData]);
         }
       });
 
