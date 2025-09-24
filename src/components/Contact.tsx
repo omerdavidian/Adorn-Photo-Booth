@@ -111,7 +111,8 @@ const Contact: React.FC = () => {
         body: formDataToSend,
       });
 
-      if (response.ok) {
+      // Check if response is successful (200-299 status codes)
+      if (response.status >= 200 && response.status < 300) {
         setIsSubmitting(false);
         setSubmitted(true);
         setFormData({
@@ -127,7 +128,10 @@ const Contact: React.FC = () => {
           message: ''
         });
       } else {
-        throw new Error('Failed to submit form');
+        // Log the actual response for debugging
+        const errorText = await response.text();
+        console.error('Form submission failed:', response.status, errorText);
+        throw new Error(`Failed to submit form: ${response.status}`);
       }
     } catch (error) {
       setIsSubmitting(false);
