@@ -144,7 +144,7 @@ const Contact: React.FC = () => {
               <span className="contact-icon">📍</span>
               <div>
                 <h4>Service Area</h4>
-                <p>Based in Denver and Summit County CO.</p>
+                <p>Based in Denver and Summit County, CO.</p>
                 <p>Serving events throughout Colorado</p>
               </div>
             </div>
